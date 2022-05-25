@@ -22,3 +22,32 @@ def make_user(name, reviews):
 def user_name(user):
 	return user[0]
 
+
+def user_review(user):
+	return user[1]
+
+
+
+def user_review_restaurant(user, restaurant):
+	name = list(user_review(user))
+
+	return [r for r in restaurant if restaurant_name(r) in names]
+
+
+def user_rating(user, restaurant_name):
+	reviewed_by_user = user_review(user)
+	user_review = reviewed_by_user[restaurant_name]
+	return review_rating(user_review)
+
+
+
+
+
+
+
+
+
+
+
+
+
