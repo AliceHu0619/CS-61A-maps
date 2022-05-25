@@ -41,6 +41,31 @@ def user_rating(user, restaurant_name):
 
 
 
+def make_restaurant(name, location, categories, price, reviews):
+	return [name, location, categories, price, reviews]
+
+
+def restaurant_name(restaurant):
+	return restaurant[0]
+
+
+
+def restaurant_location(restaurant):
+	return restaurant[1]
+
+
+def restaurant_categories(restaurant):
+	return restaurant[2]
+
+
+def restaurant_price(restaurant):
+	return restaurant[3]
+
+
+def restaurant_ratings(restaurant):
+	return [review_rating(r) for r in restaurant[4]]
+
+
 
 
 
