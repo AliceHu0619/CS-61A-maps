@@ -76,7 +76,30 @@ def load_data(user_dataset, review_dataset, restaurant_dataset):
 
 	users = []
 
-	
+	for userid, user in userid_to_user.items():
+		name = user_name(user)
+		user_reviews = userid_to_reviews[userid]
+
+		user = make_user(name, user_reviews)
+		users.append(user)
+
+
+	return users, reviews, list(restaurant.values())
+
+
+
+USERS,REVIEWS,ALL_RESTAURANT = load_data('user.json', 'reviews.json', 'restaurant.json')
+
+CATEGORIES = {c for r in ALL_RESTAURANTS for c in restaurant_categories(r)}
+
+def load_user_file(user_file):
+    with open(os.path.join(USER_DIRECTORY, user_file)) as f:
+        return eval(f.read())
+
+import glob
+USER_FILES = [f[6:-4] for f in glob.glob('users/*.dat')]
+
+
 
 
 
