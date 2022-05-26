@@ -56,7 +56,28 @@ def load_data(user_dataset, review_dataset, restaurant_dataset):
 		rating = float(review['stars'])
 
 		review = make_review(restaurant, rating)
-		
+		reviews.append(review)
+
+		busid_to_reviews[_business_id].append(review)
+		userid_to_reviews[_user_id].append(review)
+
+	restaurants = {}
+
+	for busid, restaurant in busid_to_restaurant.items():
+		name = restaurant_name(restaurant)
+		location = list(restaurant_location(restaurant))
+		categories = restaurant_categories(restaurant)
+		price = restaurant_price(restaurant)
+		restaurant_review = busid_to_review[busid]
+
+		restaurant = make_restaurant(name,location, categories,price,restaurant_review)
+		restaurant[name] = restaurant
+
+
+	users = []
+
+	
+
 
 
 
