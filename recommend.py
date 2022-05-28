@@ -41,7 +41,18 @@ def find_centroid(cluster):
 
 
 def k_means(restaurants, k, max_updates = 100):
-	
+	assert len(restaurants) >= k, 'Not enough restaurants to cluster'
+	old_centroids, n = [], 0
+
+	centroids = [restaurants_location(r) for r in sample(restaurants, k)]
+
+	while old_centroids != centroids and n < max_updates:
+
+		old_centroids = centroids
+		pairs = group_by_centroid(restaurants, centroids)
+		centroids = [find_centroid(l) for l in pairs]
+		n += 1
+	return centroids
 
 
 
