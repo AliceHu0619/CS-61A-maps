@@ -67,7 +67,43 @@ def find_predictor(user, restaurants, feature_fn):
 
 	y_mean = mean(ys)
 	syy = sum([(y - y_mean) ** 2 for y in ys])
-	sxy = sum()
+	sxy = sum([(x - x_mean)*(y - y_mean) for x, y in zip(xs, ys)])
+
+	b = sxy / sxx
+	a = y_mean - b * x_mean
+	r_squared = sxy * sxy / (sxx * syy)
+
+
+
+
+	def predictor(restaurant):
+		return b * feature_fn(restaurant) + a
+
+	return predictor, r_squared
+
+
+
+
+
+def best_predictor(user, restaurants, feature_fns):
+
+	dt = {}
+	for feature_fn in feature_fns:
+		predictor, r_squared = find_predictor(user, reviewed, feature_fn)
+		dt[predictor] = r_squared
+
+	return max(dt, key = lambda x :dt[x])
+
+
+
+
+
+
+
+
+
+
+
 
 
 
