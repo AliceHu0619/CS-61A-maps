@@ -56,6 +56,23 @@ def k_means(restaurants, k, max_updates = 100):
 
 
 
+def find_predictor(user, restaurants, feature_fn):
+	reviews_by_user = {review_restaurant_name(review): review_rating(review) for review in user_reviews(user).values()}
+
+	xs = [feature_fn(r) for r in restaurants]
+	ys = [reviews_by_user[restaurant_name(r)] for r in restaurants] 
+
+	x_mean = mean(xs)
+	sxx = sum([(x - x_mean) ** 2 for x in xs])
+
+	y_mean = mean(ys)
+	syy = sum([(y - y_mean) ** 2 for y in ys])
+	sxy = sum()
+
+
+
+
+
 
 
 
