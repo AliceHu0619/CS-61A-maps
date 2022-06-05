@@ -109,7 +109,71 @@ def search(query, restaurants):
 
 	return [r for r in restaurants if query in restaurant_categories(r)]
 
-	
+
+
+def feature_set():
+    """Return a sequence of feature functions."""
+    return [lambda r: mean(restaurant_ratings(r)),
+            restaurant_price,
+            lambda r: len(restaurant_ratings(r)),
+            lambda r: restaurant_location(r)[0],
+            lambda r: restaurant_location(r)[1]]
+
+
+@main
+def main(*args):
+    import argparse
+    parser = argparse.ArgumentParser(
+        description='Run Recommendations',
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+    parser.add_argument('-u', '--user', type=str, choices=USER_FILES,
+                        default='test_user',
+                        metavar='USER',
+                        help='user file, e.g.\n' +
+                        '{{{}}}'.format(','.join(sample(USER_FILES, 3))))
+    parser.add_argument('-k', '--k', type=int, help='for k-means')
+    parser.add_argument('-q', '--query', choices=CATEGORIES,
+                        metavar='QUERY',
+                        help='search for restaurants by category e.g.\n'
+                        '{{{}}}'.format(','.join(sample(CATEGORIES, 3))))
+    parser.add_argument('-p', '--predict', action='store_true',
+                        help='predict ratings for all restaurants')
+    parser.add_argument('-r', '--restaurants', action='store_true',
+                        help='outputs a list of restaurant names')
+    args = parser.parse_args()
+
+    # Output a list of restaurant names
+    if args.restaurants:
+        print('Restaurant names:')
+        for restaurant in sorted(ALL_RESTAURANTS, key=restaurant_name):
+            print(repr(restaurant_name(restaurant)))
+        exit(0)
+
+    # Select restaurants using a category query
+    if args.query:
+        restaurants = search(args.query, ALL_RESTAURANTS)
+    else:
+        restaurants = ALL_RESTAURANTS
+
+    # Load a user
+    assert args.user, 'A --user is required to draw a map'
+    user = load_user_file('{}.dat'.format(args.user))
+
+    # Collect ratings
+    if args.predict:
+        ratings = rate_all(user, restaurants, feature_set())
+    else:
+        restaurants = user_reviewed_restaurants(user, restaurants)
+        names = [restaurant_name(r) for r in restaurants]
+        ratings = {name: user_rating(user, name) for name in names}
+
+    # Draw the visualization
+    if args.k:
+        centroids = k_means(restaurants, min(args.k, len(restaurants)))
+    else:
+        centroids = [restaurant_location(r) for r in restaurants]
+    draw_map(centroids, restaurants, ratings)
 
 
 
