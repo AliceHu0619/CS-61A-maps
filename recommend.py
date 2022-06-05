@@ -97,8 +97,19 @@ def best_predictor(user, restaurants, feature_fns):
 
 
 
+def rate_all(user, restaurants, feature_fn):
+	predictor = best_predictor(user, ALL_RESTAURANT, feature_fns)
+	reviewed = user_reviews_restaurant(user, restaurants)
+
+	return {restaurant_name(r): user_rating(user, restaurant_name(r)) if r in reviewed else predictor(r) for r in restaurant}
 
 
+
+def search(query, restaurants):
+
+	return [r for r in restaurants if query in restaurant_categories(r)]
+
+	
 
 
 
