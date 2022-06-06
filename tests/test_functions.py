@@ -50,7 +50,19 @@ class Abstract(object):
 		return id(self)
 
 
-	
+
+class User(Abstract):
+	def __init__(self, name, review):
+		self.a, self.b = name, {review_restaurant_name(r): r for r in reviews}
+
+
+	def __repr__(self):
+		return '<User {} {}>'.format(self.a, list(map(repr, self.b)))
+
+
+
+
+make_user = User
 
 
 
