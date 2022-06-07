@@ -94,9 +94,33 @@ class Restaurant(Abstract):
 	def __repr__(self):
 		return '<Restaurant {}>'.format(self.a)
 
-		
 
 
+make_restaurant = Restaurant
+restaurant_name = lambda r: r.a
+restaurant_location = lambda r: r.b 
+restaurant_categories = lambda r: r.c 
+restaurant_price = lambda r: r.d 
+restaurant_ratings = lambda r: r.f 
+
+
+
+old = {}
+
+def swap_implementations(impl, user = True, review = True, rest = True):
+
+	old['user'] = impl.make_user, impl.user_name, impl.user_reviews,impl.user_reivewed_restaurants, impl.user_rating
+
+	old['review'] = impl.make_review, impl.review_restaurant_name, impl.review_rating
+
+	old['rest'] = impl.make_restaurant, impl.restaurant_name,impl.restaurant_location, impl.restaurant_categories, impl.restaurant_price, impl.restaurant_ratings
+
+
+	new_user = make_user, user_name, user_reviews, user_reivewed_restaurants, user_rating
+
+	new_reivew = make_review, review_restaurant_name, review_rating
+
+	new_rest = make_restaurant, restaunrant_name, restaurant_location, restaurant_categories
 
 
 
