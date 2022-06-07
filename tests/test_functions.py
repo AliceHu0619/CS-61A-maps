@@ -132,11 +132,24 @@ def swap_implementations(impl, user = True, review = True, rest = True):
 		impl.make_review, impl.review_restaurant_name, impl.review_rating = new_reivew
 
 	if rest:
-		impl.make_restaurant, impl.restaurant_name, impl.restaurant_location
+		impl.make_restaurant, impl.restaurant_name, impl.restaurant_location, impl.restaurant_categories, impl.restaurant_price, impl.restaurant_ratings = new_rest
 
 
 
+def restore_implementations(impl):
+	impl.make_user, impl.user_name, impl.user_reviews, impl.user_reivewed_restaurants, impl.user_rating = old['user']
+	impl.make_review, impl.review_restaurant_name, impl.review_rating = old['review']
+	impl.make_restaurant, impl.restaurant_name, impl.restaurant_location, impl.restaurant_categories, impl.restaurant_price, impl.restaurant_ratings = old['rest']
 
+def check_same_elements(cluster1, cluster2):
+	return len(cluster1) == len(cluster2) and all(el1 == el2 for el1, el2 in zip(cluster1, cluster2))
+
+
+def deep_check_same_element(cluster1, cluster2):
+	return len(cluster1) == len(cluster2) and all(check_same_elements(c1, c2) for c1,c2 in zip(cluster1, cluster2))
+
+def sample(lst, k):
+	return lst[:k]
 
 
 
