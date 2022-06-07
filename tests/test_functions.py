@@ -63,6 +63,28 @@ class User(Abstract):
 
 
 make_user = User
+user_name = lambda u : u.a
+user_reviews = lambda u : u.b 
+user_reivewed_restaurants = lambda u,r : [r_ for r_ in r if restaunrant_name(r_) in user_reviews(u)]
+
+user_rating = lambda u, n : review_rating(user_reviews(u)[n])
+
+
+class Reviews(Abstract):
+	def __init__(self, restaunrant_name, rating):
+		self.a, self.b = restaunrant_name, review_rating
+
+	def __repr__(self):
+		return '<Review {} {}>'.format(self.a, self.b)
+
+
+make_review = Review
+review_restaurant_name = lambda r: r.a
+review_rating = lambda r: r.b 
+
+
+class Restaurant(Abstract):
+	
 
 
 
