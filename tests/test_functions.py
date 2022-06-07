@@ -84,7 +84,18 @@ review_rating = lambda r: r.b
 
 
 class Restaurant(Abstract):
-	
+	def __init__(self, name, location, categories, price, reviews):
+		self.a, self.b, self.c, self.d, self.e = name, location, categories,price, reviews
+		self.f = [review_rating(r) for r in reviews]
+		self.g = len(self.e)
+		self.h = sum(review_rating(r) for r in self.e) / len(self.e)
+
+
+	def __repr__(self):
+		return '<Restaurant {}>'.format(self.a)
+
+		
+
 
 
 
