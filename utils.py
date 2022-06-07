@@ -49,8 +49,19 @@ def enumerate(s, start=0):
 
 
 
+def distance(pos1, pos2):
+	>>> distance([1, 2], [4, 6])
+	return sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2)
+
+
+def mean(s):
+	>>> mean([-1, 3])
+	>>> mean([0, -3, 2, -1])
+
+	assert len(s) > 0, 'empty list'
+    return sum(s) / len(s)
 
 
 
-	
+
 
